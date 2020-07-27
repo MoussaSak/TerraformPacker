@@ -1,0 +1,33 @@
+{
+  "description": "packer form",
+  "min_packer_version": "1.3.5",
+  "builders": [
+    {
+      "organization_id": "{{user `organization_id`}}",
+      "api_token": "{{user `api_token`}}",
+      "image": "f974feac-abae-4365-b988-8ec7d1cec10d",
+      "image_name": "Inge-05-Ubuntu {{user `CI_JOB_ID`}}",
+      "region": "par1",
+      "commercial_type": "DEV1-M",
+      "name": "packer-ingecloud-05",
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "type": "scaleway"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+	"apt-get update",
+        "apt-get install -y tree htop",
+        "useradd -m -u 6000 packer-form"
+      ]
+    }
+  ],
+  "variables": {
+	"organization_id": "{{env `organization_id`}}",
+	"api_token": "{{env `api_token`}}",
+	"CI_JOB_ID": "{{env `CI_JOB_ID`}}"
+  }
+}

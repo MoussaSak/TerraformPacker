@@ -1,0 +1,28 @@
+---
+image:
+  name: "hashicorp/terraform"
+  entrypoint:
+   - "/usr/bin/env"
+   - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+before_script:
+  - cd atelier_1
+
+stages:
+  - validate
+  - tflint
+validate:
+  stage: validate
+  script:
+    - terraform init
+    - terraform validate
+
+tflint:
+  stage: tflint
+  image:
+    name: "wata727/tflint"
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  script:
+    - tflint
